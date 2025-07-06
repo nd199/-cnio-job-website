@@ -26,6 +26,18 @@ const userSchema = db.Schema({
     enum: ['ADMIN', 'USER', 'RECRUITER'],
     default: 'USER',
   },
+  education: {
+    type: String,
+    default: '',
+  },
+  experience: {
+    type: String,
+    default: '',
+  },
+  skills: {
+    type: [String],
+    default: [],
+  },
 });
 
 module.exports = db.model('User', userSchema);

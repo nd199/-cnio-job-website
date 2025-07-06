@@ -10,11 +10,9 @@ const morgan = require('morgan');
 app.use(cors({}));
 app.use(express.json());
 app.use(helmet.default);
-app.use(morgan('dev'));Developer: Toggle Developer Tools → Console
+app.use(morgan('dev'));
 
 //routes
-
-
 
 //mongoose and server initialization
 mongoose
