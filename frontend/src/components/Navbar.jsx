@@ -8,20 +8,19 @@ import {
   UserCircle2Icon,
 } from 'lucide-react';
 import { useState } from 'react';
-import BottomNav from './BottomNav';
 
-const Navbar = () => {
+const Navbar = ({ setShowMessages }) => {
   const [searchTerm, setSearchTerm] = useState('');
   const [showSearchDropdown, setShowSearchDropdown] = useState(false);
-  const [open, setOpen] = useState(false);
 
   const handleSearchEvents = (e) => {
-    setSearchTerm(e.target.value);
-    setShowSearchDropdown(true);
+    const value = e.target.value;
+    setSearchTerm(value);
+    setShowSearchDropdown(value.trim().length > 0);
   };
 
   return (
-    <div className="w-full flex justify-between items-center px-30 h-24 shadow-md font-body m-auto transition border-color duration-300 ease-in-out gap-4 sm:px-5 xs:px-5">
+    <div className="w-full fixed top-0 flex justify-between items-center px-10 h-24 shadow-md font-body m-auto transition border-color duration-300 ease-in-out gap-4 sm:px-5 xs:px-5 z-50">
       <div className="hidden sm:flex text-2xl font-heading text-primary">CN.IO Jobs</div>
       <ul className="hidden lg:flex flex-row gap-4 justify-between items-center">
         <li className=" flex gap-2 items-center text-black hover:text-primaryHover text-subheading ">
@@ -62,18 +61,18 @@ const Navbar = () => {
             }}
           />
           {showSearchDropdown && (
-            <div className="w-[240px] h-[200px] shadow-md rounded-md absolute top-12 left-0 border-gray-700"></div>
+            <div className="w-[240px] h-[200px] shadow-md rounded-md absolute top-12 left-0 border-gray-700 bg-white"></div>
           )}
         </div>
-        <BottomNav open={open} setOpen={setOpen} className="hidden sm:block" />
         <div className="flex items-center gap-4 justify-between text-subheading">
-          <UserCircle2Icon className="cursor-pointer" />
+          <UserCircle2Icon size={33} className="cursor-pointer" />
         </div>
       </div>
       <div>
         <MessageSquareMoreIcon
           className="text-black hover:text-primaryHover cursor-pointer text-xl transition duration-200 ease-in-out"
           aria-label="Messages"
+          onClick={() => setShowMessages(true)}
         />
       </div>
     </div>
