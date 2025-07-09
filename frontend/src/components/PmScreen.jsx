@@ -5,13 +5,15 @@ import Message from './Message';
 const PmScreen = ({ setShowMessages }) => {
   const [searchTerm, setSearchTerm] = useState('');
   const [sortBy, setSortBy] = useState('Newest');
+  const [showMoreMenu, setShowMoreMenu] = useState(false);
 
   const handleSearchEvents = (e) => {
     setSearchTerm(e.target.value);
   };
   const handleSortChange = (e) => {
     setSortBy(e.target.value);
-    // Add any sorting logic here, or pass event up if needed
+    setShowMoreMenu(false);
+    //TODO: Add any sorting logic here, or pass event up if needed
   };
 
   return (
@@ -32,41 +34,46 @@ const PmScreen = ({ setShowMessages }) => {
             onChange={handleSearchEvents}
           />
         </div>
-        <MoreVertical className="m-0 flex-[0.3] ml-2" />
-        <div className="w-[200px] h-[auto] bg-white absolute top-14 right-7 rounded-sm border border-gray-300 shadow-lg p-4 flex flex-col items-center justify-center gap-4">
-          <div className="w-full flex items-start justify-center flex-col">
-            <label htmlFor="sortBy" className="block text-sm font-semibold mb-2">
-              Sort By
-            </label>
-            <select
-              id="sortBy"
-              value={sortBy}
-              onChange={handleSortChange}
-              className="w-full rounded-md border border-gray-300 p-2 focus:outline-none focus:ring-2 focus:ring-primary"
+        <MoreVertical
+          className="m-0 flex-[0.3] ml-2 cursor-pointer"
+          onClick={() => setShowMoreMenu((prev) => !prev)}
+        />
+        {showMoreMenu && (
+          <div className="w-[200px] h-[auto] bg-white absolute top-14 right-7 rounded-sm border border-gray-300 shadow-lg p-4 flex flex-col items-center justify-center gap-4">
+            <div className="w-full flex items-start justify-center flex-col">
+              <label htmlFor="sortBy" className="block text-sm font-semibold mb-2">
+                Sort By
+              </label>
+              <select
+                id="sortBy"
+                value={sortBy}
+                onChange={handleSortChange}
+                className="w-full rounded-md border border-gray-300 p-2 focus:outline-none focus:ring-2 focus:ring-primary"
+              >
+                <option>Newest</option>
+                <option>Oldest</option>
+              </select>
+            </div>
+            <div className="w-full flex items-center justify-center">
+              <label className="flex items-center gap-2 cursor-pointer">
+                <input type="checkbox" onClick={() => setShowMoreMenu(false)} />
+                Mute notifications
+              </label>
+            </div>
+            <button
+              className="w-full bg-blue-600 text-white rounded-md py-1 hover:bg-blue-700 transition"
+              onClick={() => setShowMoreMenu(false)}
             >
-              <option>Newest</option>
-              <option>Oldest</option>
-            </select>
+              Mark all as read
+            </button>
+            <button
+              className="w-full bg-red-600 text-white rounded-md py-1 hover:bg-red-700 transition"
+              onClick={() => setShowMoreMenu(false)}
+            >
+              Clear chat history
+            </button>
           </div>
-          <div className="w-full flex items-center justify-center">
-            <label className="flex items-center gap-2 cursor-pointer">
-              <input type="checkbox" />
-              Mute notifications
-            </label>
-          </div>
-          <button
-            className="w-full bg-blue-600 text-white rounded-md py-1 hover:bg-blue-700 transition"
-            onClick={() => alert('Marked all as read')}
-          >
-            Mark all as read
-          </button>
-          <button
-            className="w-full bg-red-600 text-white rounded-md py-1 hover:bg-red-700 transition"
-            onClick={() => alert('Clear chat history')}
-          >
-            Clear chat history
-          </button>
-        </div>
+        )}
       </div>
       <div className="w-full border-b-2 border-gray-200">
         <ul className="flex justify-evenly gap-2 p-3 text-sm text-gray-800">

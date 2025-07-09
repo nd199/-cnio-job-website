@@ -20,8 +20,10 @@ const Navbar = ({ setShowMessages }) => {
   };
 
   return (
-    <div className="w-full fixed top-0 flex justify-between items-center px-10 h-24 shadow-md font-body m-auto transition border-color duration-300 ease-in-out gap-4 sm:px-5 xs:px-5 z-50">
-      <div className="hidden sm:flex text-2xl font-heading text-primary">CN.IO Jobs</div>
+    <div className="w-full fixed top-0 flex justify-between items-center px-10 h-24 shadow-md font-body m-auto transition border-color duration-300 ease-in-out gap-4 sm:px-5 xs:px-5 z-200">
+      <div className="hidden sm:flex text-2xl font-heading text-primary cursor-pointer">
+        <a href="#">CN.IO Jobs</a>
+      </div>
       <ul className="hidden lg:flex flex-row gap-4 justify-between items-center">
         <li className=" flex gap-2 items-center text-black hover:text-primaryHover text-subheading ">
           <Home className="" />
@@ -42,8 +44,8 @@ const Navbar = ({ setShowMessages }) => {
       </ul>
       <div className="flex flex-row xs:w-full xs:flex-row-reverse md:w-fit md:flex-row-reverse items-center justify-between gap-4">
         <div
-          className="flex items-center justify-between border-2 border-black hover:border-primaryHover rounded-2xl p-2
-          relative"
+          className="flex items-center justify-between border-2 border-black hover:border-primaryHover
+          rounded-2xl p-2 relative lg:w-[350px]"
         >
           <SearchIcon className="text-black hover:text-primaryHover text-xl m-0 p-0 cursor-pointer" />
           <input
@@ -60,8 +62,21 @@ const Navbar = ({ setShowMessages }) => {
               }
             }}
           />
-          {showSearchDropdown && (
-            <div className="w-[240px] h-[200px] shadow-md rounded-md absolute top-12 left-0 border-gray-700 bg-white"></div>
+          {showSearchDropdown && searchTerm && (
+            <div className="absolute top-12 left-0 w-full shadow-md rounded-md border border-gray-700 bg-white z-50">
+              {['Developer', 'Designer', 'HR Manager'].map((result, idx) => (
+                <div
+                  key={idx}
+                  className="px-4 py-2 text-black hover:bg-gray-100 cursor-pointer"
+                  onClick={() => {
+                    setSearchTerm(result);
+                    setShowSearchDropdown(false);
+                  }}
+                >
+                  {result}
+                </div>
+              ))}
+            </div>
           )}
         </div>
         <div className="flex items-center gap-4 justify-between text-subheading">
