@@ -1,31 +1,8 @@
 import { ArrowUp } from 'lucide-react';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef } from 'react';
 
-const AIMaxScreen = ({ aiMaxScreen, setAiMaxScreen }) => {
-  const [messages, setMessages] = useState([
-    { text: 'Welcome! Ask me anything about jobs, tech, or career guidance.', sender: 'ai' },
-    { text: 'What are some React jobs in Bangalore?', sender: 'user' },
-  ]);
-  const [input, setInput] = useState('');
+const AIMaxScreen = ({ aiMaxScreen, setAiMaxScreen, input, setInput, sendMessage, messages }) => {
   const messagesEndRef = useRef(null);
-
-  const sendMessage = () => {
-    if (!input.trim()) return;
-    const newMessages = [...messages, { text: input.trim(), sender: 'user' }];
-    setMessages(newMessages);
-    setInput('');
-    // Optional: Add simulated AI response
-    setTimeout(() => {
-      setMessages((prev) => [
-        ...prev,
-        { text: input.trim(), sender: 'user' },
-        {
-          text: "Here's a React job: Frontend Developer at TechMahindra, Bangalore.",
-          sender: 'ai',
-        },
-      ]);
-    }, 800);
-  };
 
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
@@ -48,22 +25,24 @@ const AIMaxScreen = ({ aiMaxScreen, setAiMaxScreen }) => {
         </div>
 
         {/* Chat Area */}
-        <div className="flex-1 bg-slate-800 text-white p-4 space-y-2 overflow-y-auto text-sm">
-          {messages.map((msg, idx) => (
-            <div
-              key={idx}
-              className={`flex ${msg.sender === 'user' ? 'justify-end' : 'justify-start'}`}
-            >
+        <div className="flex-1 bg-slate-800 text-white text-sm overflow-hidden">
+          <div className="h-full overflow-y-auto p-4 space-y-2">
+            {messages.map((msg, idx) => (
               <div
-                className={`p-2 rounded-md max-w-[75%] break-words whitespace-pre-wrap ${
-                  msg.sender === 'user' ? 'bg-green-500 text-black' : 'bg-slate-600 text-white'
-                }`}
+                key={idx}
+                className={`flex ${msg.sender === 'user' ? 'justify-end' : 'justify-start'}`}
               >
-                {msg.text}
+                <div
+                  className={`p-2 rounded-md max-w-[75%] break-words whitespace-pre-wrap ${
+                    msg.sender === 'user' ? 'bg-green-500 text-black' : 'bg-slate-600 text-white'
+                  }`}
+                >
+                  {msg.text}
+                </div>
               </div>
-            </div>
-          ))}
-          <div ref={messagesEndRef} />
+            ))}
+            <div ref={messagesEndRef} />
+          </div>
         </div>
 
         {/* Input Bar */}
