@@ -1,10 +1,12 @@
 import { LucideArrowBigDownDash } from 'lucide-react';
 import { useState } from 'react';
 import GroqClient from '../../api/groqClient';
+import { useBlockedWords } from '../../utils/useBlockedWords';
 import AIMaxScreen from './AIMaxScreen';
 import AIMinScreen from './AIMinScreen';
 
 const HomeLeft = () => {
+  const blockedWords = useBlockedWords();
   const [aiMaxScreen, setAiMaxScreen] = useState(false);
   const [expand, setExpand] = useState(false);
   const [input, setInput] = useState('');
@@ -12,6 +14,21 @@ const HomeLeft = () => {
 
   const sendMessage = async () => {
     if (!input.trim()) return;
+    const inputLower = input.trim().toLowerCase();
+    const containsBlockedWord = blockedWords.some((word) =>
+      inputLower.includes(word.toLowerCase())
+    );
+    if (containsBlockedWord) {
+      setMessages((prev) => [
+        ...prev,
+        {
+          text: 'Sorry, this assistant only answers job and career-related questions.',
+          sender: 'ai',
+        },
+      ]);
+      return;
+    }
+
     const userMessage = { text: input, sender: 'user' };
     setMessages([...messages, userMessage]);
     setInput('');
@@ -21,7 +38,15 @@ const HomeLeft = () => {
         messages: [
           {
             role: 'system',
-            content: 'You are a helpful job assistant that answers clearly and smartly.',
+            content: `You are a helpful job assistant on a job platform that answers clearly and smartly.
+             You must **only** answer questions related to:
+             - job search
+             - career advice,
+             - resume/interview tips,
+             - job notifications,
+             - job skills or preparation.
+             If the user asks about anything unrelated (like politics, relationships, religion, hacking, or personal opinions), politely say:
+            "I'm here to assist only with job and career-related queries. Please ask me about jobs, careers, or learning paths."`,
           },
           ...messages.map((m) => ({
             role: m.sender === 'user' ? 'user' : 'assistant',

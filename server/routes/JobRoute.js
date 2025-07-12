@@ -20,6 +20,7 @@ router.get('/', async (req, res) => {
     experience,
     location,
     type,
+    skills,
     page = 1,
     limit = 10,
     postedWithinDays = 7,
@@ -37,6 +38,10 @@ router.get('/', async (req, res) => {
   if (experience) filter.experience = { $regex: experience, $options: 'i' };
   if (location) filter.location = { $regex: location, $options: 'i' };
   if (type) filter.jobType = type;
+  if (skills) {
+    const skillArray = skills.split(',').map((skill) => skill.trim());
+    filter.skills = { $in: skillArray };
+  }
   try {
     const pageNumber = parseInt(page, 10);
     const limitNumber = parseInt(limit, 10);

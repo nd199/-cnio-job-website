@@ -1,8 +1,11 @@
 const router = require('express').Router();
+const blockedTopics = require('../utils/AI/filters/blockedTopics');
+const { authentication, authorization } = require('../utils/middlewares/authMiddleWare');
 
-router.post('/api/chat', async (req, res) => {
-  const prompt = req.body.prompt;
+router.post('/ai/blocked-Topics', authentication, authorization('admin'), (req, res) => {
   try {
-    const response = await axios.post("/")
+    return res.sendStatus(200).json({ blockedTopics: blockedTopics });
+  } catch (res) {
+    return res.sendStatus(500).json({ message: 'Issue sending blockedTopics' });
   }
 });

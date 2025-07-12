@@ -2,7 +2,7 @@ import { Briefcase, Building2, Home, Mail, UserCircle2Icon } from 'lucide-react'
 
 const BottomNav = () => {
   return (
-    <nav className="lg:hidden xl:hidden bottom-0 left-0 right-0 bg-white shadow-md border-t border-gray-300 flex justify-around items-center h-16">
+    <nav className="bottom-0 left-0 right-0 bg-white shadow-md border-t border-gray-300 flex justify-around items-center h-16">
       <a
         href="#"
         className="flex flex-col items-center justify-center text-subheading text-black hover:text-primaryHover"

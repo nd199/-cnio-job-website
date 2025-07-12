@@ -8,10 +8,12 @@ import {
   UserCircle2Icon,
 } from 'lucide-react';
 import { useState } from 'react';
+import JobCategories from './JobCategories';
 
 const Navbar = ({ setShowMessages }) => {
   const [searchTerm, setSearchTerm] = useState('');
   const [showSearchDropdown, setShowSearchDropdown] = useState(false);
+  const [showJobsCategories, setShowJobCategories] = useState(false);
 
   const handleSearchEvents = (e) => {
     const value = e.target.value;
@@ -20,7 +22,7 @@ const Navbar = ({ setShowMessages }) => {
   };
 
   return (
-    <div className="w-full fixed top-0 flex justify-between items-center px-10 h-24 shadow-md font-body m-auto transition border-color duration-300 ease-in-out gap-4 sm:px-5 xs:px-5 z-200">
+    <div className="w-full fixed top-0 flex justify-between items-center px-10 h-24 shadow-md font-body m-auto transition border-color duration-300 ease-in-out gap-4 sm:px-5 xs:px-5 z-[200] bg-white">
       <div className="hidden sm:flex text-2xl font-heading text-primary cursor-pointer">
         <a href="#">CN.IO Jobs</a>
       </div>
@@ -29,9 +31,13 @@ const Navbar = ({ setShowMessages }) => {
           <Home className="" />
           <a href="">Home</a>
         </li>
-        <li className=" flex gap-2 items-center  text-black hover:text-primaryHover text-subheading ">
+        <li
+          className="relative flex gap-2 items-center text-black hover:text-primaryHover text-subheading"
+          onClick={() => setShowJobCategories(true)}
+        >
           <Briefcase />
-          <a href="">Jobs</a>
+          Jobs
+          {showJobsCategories && <JobCategories />}
         </li>
         <li className="flex gap-2 items-center text-black hover:text-primaryHover text-subheading ">
           <Building2 />

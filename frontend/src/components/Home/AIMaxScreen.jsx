@@ -1,13 +1,8 @@
 import { ArrowUp } from 'lucide-react';
-import { useEffect, useRef } from 'react';
+import { useRef } from 'react';
 
 const AIMaxScreen = ({ aiMaxScreen, setAiMaxScreen, input, setInput, sendMessage, messages }) => {
   const messagesEndRef = useRef(null);
-
-  useEffect(() => {
-    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
-  }, [messages]);
-
   if (!aiMaxScreen) return null;
 
   return (
