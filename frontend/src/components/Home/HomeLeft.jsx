@@ -70,8 +70,7 @@ const HomeLeft = () => {
   return (
     <div className="flex-[1.8] max-w-[400px] rounded-lg flex items-center flex-col gap-4 h-auto">
       <div className="mt-2 w-full max-h-[500px] bg-white rounded-lg shadow-2xl font-bold">
-        <div className="w-full text-lg shadow-sm bg-transparent flex flex-col items-center justify-center">
-          {/* Header */}
+        <div className="flex flex-col items-center justify-center w-full text-lg bg-transparent shadow-sm">
           <AIMinScreen
             aiMaxScreen={aiMaxScreen}
             setAiMaxScreen={setAiMaxScreen}
@@ -84,23 +83,23 @@ const HomeLeft = () => {
       </div>
       {expand ? (
         <div className="w-full h-[190px] bg-white rounded-lg shadow-2xl relative">
-          <div className="bg-white p-4 font-bold rounded-lg">Sort / Tags</div>
+          <div className="p-4 font-bold bg-white rounded-lg">Sort / Tags</div>
           <LucideArrowBigDownDash
-            className="w-full absolute -bottom-4 animate-bounce size-6 cursor-pointer"
+            className="absolute w-full cursor-pointer -bottom-4 animate-bounce size-6"
             onClick={() => setExpand(!expand)}
           />
         </div>
       ) : (
         <div className="w-full h-[100px] bg-white rounded-lg shadow-2xl relative">
-          <div className="bg-white p-4 font-bold rounded-lg">Sort / Tags</div>
+          <div className="p-4 font-bold bg-white rounded-lg">Sort / Tags</div>
           <LucideArrowBigDownDash
-            className="w-full absolute -bottom-4 animate-bounce size-6 cursor-pointer"
+            className="absolute w-full cursor-pointer -bottom-4 animate-bounce size-6"
             onClick={() => setExpand(!expand)}
           />
         </div>
       )}
-      <div className="w-full h-[100px] bg-white rounded-lg shadow-2xl relative">
-        <div className="bg-white p-4 font-bold rounded-lg"></div>
+      <div className="w-full h-[190px] bg-white rounded-lg shadow-2xl relative">
+        <div className="p-4 font-bold bg-white rounded-lg"></div>
       </div>
       <AIMaxScreen
         aiMaxScreen={aiMaxScreen}

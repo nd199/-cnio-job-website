@@ -7,7 +7,7 @@ export function useBlockedWords() {
   useEffect(() => {
     axios
       .get('http://localhost:3200/ai/blockedTopics')
-      .then((res) => setBlockedWords(res.data))
+      .then((res) => setBlockedWords(res.data.blockedTopics || []))
       .catch(() => {
         setBlockedWords([]);
       });

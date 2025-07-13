@@ -6,9 +6,8 @@ const AIMaxScreen = ({ aiMaxScreen, setAiMaxScreen, input, setInput, sendMessage
   if (!aiMaxScreen) return null;
 
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-40 z-50 flex items-center justify-center px-4">
+    <div className="fixed inset-0 bg-black bg-opacity-40 z-[200] flex items-center justify-center px-4">
       <div className="w-full max-w-[1000px] h-[90%] bg-white rounded-lg shadow-2xl flex flex-col overflow-hidden">
-        {/* Header */}
         <div className="p-4 border-b flex justify-between items-center bg-white">
           <h2 className="text-lg font-bold">AI Assistant</h2>
           <button
@@ -18,10 +17,12 @@ const AIMaxScreen = ({ aiMaxScreen, setAiMaxScreen, input, setInput, sendMessage
             Close
           </button>
         </div>
-
-        {/* Chat Area */}
         <div className="flex-1 bg-slate-800 text-white text-sm overflow-hidden">
           <div className="h-full overflow-y-auto p-4 space-y-2">
+            <div className="text-gray-300 italic text-lg flex flex-col items-start justify-start">
+              <span>Hi! How may I help you today?</span>
+              <p>Click the above Info button for more details</p>
+            </div>
             {messages.map((msg, idx) => (
               <div
                 key={idx}
@@ -39,8 +40,6 @@ const AIMaxScreen = ({ aiMaxScreen, setAiMaxScreen, input, setInput, sendMessage
             <div ref={messagesEndRef} />
           </div>
         </div>
-
-        {/* Input Bar */}
         <div className="p-3 border-t bg-white">
           <div className="flex items-center gap-2 rounded-md border px-3 py-2">
             <input

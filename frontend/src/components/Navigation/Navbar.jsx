@@ -22,40 +22,40 @@ const Navbar = ({ setShowMessages }) => {
   };
 
   return (
-    <div className="w-full fixed top-0 flex justify-between items-center px-10 h-24 shadow-md font-body m-auto transition border-color duration-300 ease-in-out gap-4 sm:px-5 xs:px-5 z-[200] bg-white">
-      <div className="hidden sm:flex text-2xl font-heading text-primary cursor-pointer">
+    <div className="w-full fixed top-0 flex justify-between items-center px-10 h-20 shadow-md font-body m-auto transition border-color duration-300 ease-in-out gap-4 sm:px-5 xs:px-5 z-[200] bg-white">
+      <div className="hidden text-2xl cursor-pointer sm:flex font-heading text-primary">
         <a href="#">CN.IO Jobs</a>
       </div>
-      <ul className="hidden lg:flex flex-row gap-4 justify-between items-center">
-        <li className=" flex gap-2 items-center text-black hover:text-primaryHover text-subheading ">
+      <ul className="flex-row items-center justify-between hidden gap-4 lg:flex">
+        <li className="flex items-center gap-2 text-black hover:text-primaryHover text-subheading">
           <Home className="" />
           <a href="">Home</a>
         </li>
         <li
-          className="relative flex gap-2 items-center text-black hover:text-primaryHover text-subheading"
+          className="relative flex items-center gap-2 text-black hover:text-primaryHover text-subheading"
           onClick={() => setShowJobCategories(true)}
         >
           <Briefcase />
           Jobs
           {showJobsCategories && <JobCategories />}
         </li>
-        <li className="flex gap-2 items-center text-black hover:text-primaryHover text-subheading ">
+        <li className="flex items-center gap-2 text-black hover:text-primaryHover text-subheading ">
           <Building2 />
           <a href="">Companies</a>
         </li>
-        <li className="flex gap-2 items-center text-black hover:text-primaryHover text-subheading ">
+        <li className="flex items-center gap-2 text-black hover:text-primaryHover text-subheading ">
           <Mail />
           <a href="">Contact Us</a>
         </li>
       </ul>
-      <div className="flex flex-row xs:w-full xs:flex-row-reverse md:w-fit md:flex-row-reverse items-center justify-between gap-4">
+      <div className="flex flex-row items-center justify-between gap-4 xs:w-full xs:flex-row-reverse md:w-fit md:flex-row-reverse">
         <div
           className="flex items-center justify-between border-2 border-black hover:border-primaryHover
           rounded-2xl p-2 relative lg:w-[350px]"
         >
-          <SearchIcon className="text-black hover:text-primaryHover text-xl m-0 p-0 cursor-pointer" />
+          <SearchIcon className="p-0 m-0 text-xl text-black cursor-pointer hover:text-primaryHover" />
           <input
-            className="bg-transparent border-none outline-none ml-2 w-full"
+            className="w-full ml-2 bg-transparent border-none outline-none"
             placeholder="Search Jobs..."
             value={searchTerm}
             aria-label="Search jobs"
@@ -69,11 +69,11 @@ const Navbar = ({ setShowMessages }) => {
             }}
           />
           {showSearchDropdown && searchTerm && (
-            <div className="absolute top-12 left-0 w-full shadow-md rounded-md border border-gray-700 bg-white z-50">
+            <div className="absolute left-0 z-50 w-full bg-white border border-gray-700 rounded-md shadow-md top-12">
               {['Developer', 'Designer', 'HR Manager'].map((result, idx) => (
                 <div
                   key={idx}
-                  className="px-4 py-2 text-black hover:bg-gray-100 cursor-pointer"
+                  className="px-4 py-2 text-black cursor-pointer hover:bg-gray-100"
                   onClick={() => {
                     setSearchTerm(result);
                     setShowSearchDropdown(false);
@@ -85,13 +85,13 @@ const Navbar = ({ setShowMessages }) => {
             </div>
           )}
         </div>
-        <div className="flex items-center gap-4 justify-between text-subheading">
+        <div className="flex items-center justify-between gap-4 text-subheading">
           <UserCircle2Icon size={33} className="cursor-pointer" />
         </div>
       </div>
       <div>
         <MessageSquareMoreIcon
-          className="text-black hover:text-primaryHover cursor-pointer text-xl transition duration-200 ease-in-out"
+          className="text-xl text-black transition duration-200 ease-in-out cursor-pointer hover:text-primaryHover"
           aria-label="Messages"
           onClick={() => setShowMessages(true)}
         />

@@ -9,10 +9,17 @@ const morgan = require('morgan');
 //middlewares
 app.use(cors({}));
 app.use(express.json());
-app.use(helmet.default);
+app.use(helmet());
 app.use(morgan('dev'));
 
-//routes
+// News routes
+const newsRoutes = require('./routes/NewsRoute');
+app.use('/news', newsRoutes);
+app.use('/', newsRoutes); // Allow accessing /articles directly
+
+//AI routes
+const aiRoutes = require('./routes/AiRoute');
+app.use('/ai', aiRoutes);
 
 //mongoose and server initialization
 mongoose
