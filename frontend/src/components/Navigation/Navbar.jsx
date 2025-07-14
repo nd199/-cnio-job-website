@@ -62,9 +62,8 @@ const Navbar = ({ setShowMessages }) => {
             onChange={handleSearchEvents}
             onKeyDown={(e) => {
               if (e.key === 'Enter') {
-                // Your enter key logic here
                 console.log('Enter pressed!', e.target.value);
-                // For example, trigger search or submit form
+                //TODO: For example, trigger search or submit form
               }
             }}
           />

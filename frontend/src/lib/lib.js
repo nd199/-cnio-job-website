@@ -9,6 +9,11 @@ export const messages = [
     isUnread: true,
     isDraft: false,
     isStarred: true,
+    desc: `Infosys has shortlisted your profile for the Associate Software Engineer role.
+Interview details and next steps will be shared shortly.
+Make sure your resume is updated and documents are ready.
+This is a crucial step in your hiring journey with Infosys.
+Prepare well for aptitude and technical rounds.`,
   },
   {
     id: 2,
@@ -20,6 +25,11 @@ export const messages = [
     isUnread: false,
     isDraft: false,
     isStarred: false,
+    desc: `Your weekly job digest is ready with 157 matching opportunities.
+It includes listings from top companies and government sectors.
+Make sure to check them before application deadlines.
+Tailor your resume and cover letter for each role.
+Click on any job to apply directly from the portal.`,
   },
   {
     id: 3,
@@ -31,6 +41,11 @@ export const messages = [
     isUnread: true,
     isDraft: false,
     isStarred: false,
+    desc: `You are invited for a technical interview at HCL for the Software Developer role.
+The interview is scheduled for July 14 at 11:00 AM IST.
+Ensure a stable internet connection and be well-prepared.
+The email contains the video call link and instructions.
+Review your projects and practice common interview questions.`,
   },
   {
     id: 4,
@@ -42,6 +57,11 @@ export const messages = [
     isUnread: false,
     isDraft: true,
     isStarred: false,
+    desc: `You’ve drafted an application for Tech Mahindra’s Full Stack Developer role.
+It’s saved and ready for final edits before submission.
+Ensure you highlight relevant skills and achievements.
+Double-check the format, grammar, and personalization.
+Submit it soon to avoid missing the deadline.`,
   },
   {
     id: 5,
@@ -53,6 +73,11 @@ export const messages = [
     isUnread: true,
     isDraft: false,
     isStarred: false,
+    desc: `Your profile is incomplete, which affects job match accuracy.
+Finish filling in skills, experience, and preferences.
+This helps recruiters find and contact you faster.
+Completed profiles receive 80% more job matches.
+Update your profile today to unlock full features.`,
   },
   {
     id: 6,
@@ -64,6 +89,11 @@ export const messages = [
     isUnread: false,
     isDraft: false,
     isStarred: true,
+    desc: `Accenture has officially offered you the Digital Associate position.
+The offer letter is attached for your review and signature.
+Check the compensation, location, and joining date.
+Contact HR for any clarifications before accepting.
+This is a great opportunity—congratulations!`,
   },
   {
     id: 7,
@@ -75,5 +105,10 @@ export const messages = [
     isUnread: false,
     isDraft: false,
     isStarred: false,
+    desc: `Your application for Frontend Developer at Cognizant is under review.
+The recruiter will notify you if you are shortlisted.
+Stay alert for updates in the coming days.
+Meanwhile, continue applying to similar roles.
+Keep preparing for potential interviews.`,
   },
 ];
