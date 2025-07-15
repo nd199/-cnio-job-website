@@ -1,16 +1,17 @@
 const express = require('express');
 const router = express.Router();
 const Job = require('../model/Job');
-const authentication = require('../middleware/authentication');
-const { jobPosterRoles } = require('../utils/middlewares/authMiddleWare');
+const { jobPosterRoles, authentication } = require('../utils/middlewares/authMiddleWare');
 
-router.post('/', authentication, jobPosterRoles('ADMIN', 'RECRUITER'), async (req, res) => {
+router.post('/', async (req, res) => {
   try {
-    const job = new Job({ ...req.body, postedBy: req.user._id });
+    console.log('Incoming Job:', req.body);
+    const job = new Job({ ...req.body });
     const savedJob = await job.save();
     res.status(201).json(savedJob);
   } catch (error) {
-    res.status(500).json({ message: err.message || 'Issue creating job' });
+    console.error('❌ Error creating job:', error.message);
+    res.status(500).json({ message: error.message || 'Issue creating job' });
   }
 });
 
@@ -42,16 +43,19 @@ router.get('/', async (req, res) => {
     const skillArray = skills.split(',').map((skill) => skill.trim());
     filter.skills = { $in: skillArray };
   }
+
   try {
     const pageNumber = parseInt(page, 10);
     const limitNumber = parseInt(limit, 10);
     const skip = (pageNumber - 1) * limitNumber;
+
     const jobs = await Job.find(filter)
       .sort({ createdAt: -1 })
       .skip(skip)
-      .limit(limit)
+      .limit(limitNumber)
       .populate('postedBy', 'username role');
     const total = await Job.countDocuments(filter);
+
     res.status(200).json({
       page: pageNumber,
       limit: limitNumber,
@@ -60,7 +64,7 @@ router.get('/', async (req, res) => {
       data: jobs,
     });
   } catch (error) {
-    res.status(500).json({ message: error.message || 'Issue creating job' });
+    res.status(500).json({ message: error.message || 'Issue fetching jobs' });
   }
 });
 

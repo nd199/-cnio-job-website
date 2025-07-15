@@ -11,7 +11,8 @@ const jobSchema = new db.Schema(
       enum: ['Full Time', 'Part Time', 'Contract', 'Internship', 'Freelance'],
       default: 'Full Time',
     },
-    description: { type: String, required: true, minLength: 600 },
+    description: { type: String, required: true, minLength: 20 },
+    skills: [String],
     postedBy: {
       type: db.Schema.Types.ObjectId,
       ref: 'User',

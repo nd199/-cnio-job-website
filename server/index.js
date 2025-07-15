@@ -1,4 +1,8 @@
 const dotenv = require('dotenv').config();
+if (!process.env.MONGO_URI) {
+  console.error('❌ MONGO_URI not set in environment');
+  process.exit(1);
+}
 const express = require('express');
 const app = express();
 const cors = require('cors');
@@ -12,6 +16,10 @@ app.use(express.json());
 app.use(helmet());
 app.use(morgan('dev'));
 
+//Jobs routes
+const jobRoutes = require('./routes/JobRoute');
+app.use('/jobs', jobRoutes);
+
 // News routes
 const newsRoutes = require('./routes/NewsRoute');
 app.use('/news', newsRoutes);
@@ -23,9 +31,15 @@ app.use('/ai', aiRoutes);
 
 //mongoose and server initialization
 mongoose
-  .connect(process.env.MONGO_URI)
-  .then(() => console.log('Mongo Db Connection Established'))
-  .catch((err) => console.log('Error in Mongo Db Connection', err));
+  .connect(process.env.MONGO_URI, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  })
+  .then(() => console.log('✅ MongoDB connected'))
+  .catch((err) => {
+    console.error('❌ MongoDB connection error:', err.message);
+    process.exit(1);
+  });
 
 app.listen(process.env.PORT || 4003 || 4005, () => {
   console.log(`Running on Port ${process.env.PORT || 4003 || 4005}`);

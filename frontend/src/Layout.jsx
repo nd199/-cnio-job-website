@@ -5,7 +5,7 @@ import BottomNav from './components/Navigation/BottomNav';
 import Navbar from './components/Navigation/Navbar';
 
 const Layout = () => {
-  const [showMessages, setShowMessages] = useState(true);
+  const [showMessages, setShowMessages] = useState(false);
 
   return (
     <div className="w-full h-screen overflow-hidden bg-gray-100">
