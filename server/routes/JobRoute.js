@@ -6,12 +6,23 @@ const axios = require('axios');
 
 function extractSkillsFromText(description = '') {
   const skillKeywords = [
-    'Python', 'JavaScript', 'React', 'Flask', 'FastAPI', 'TypeScript', 'Docker',
-    'AWS', 'Azure', 'GCP', 'MongoDB', 'SQL', 'Redux', 'Tailwind', 'Linux'
+    'Python',
+    'JavaScript',
+    'React',
+    'Flask',
+    'FastAPI',
+    'TypeScript',
+    'Docker',
+    'AWS',
+    'Azure',
+    'GCP',
+    'MongoDB',
+    'SQL',
+    'Redux',
+    'Tailwind',
+    'Linux',
   ];
-  return skillKeywords.filter(skill =>
-    description.toLowerCase().includes(skill.toLowerCase())
-  );
+  return skillKeywords.filter((skill) => description.toLowerCase().includes(skill.toLowerCase()));
 }
 
 function extractExperienceFromText(description = '') {
@@ -96,10 +107,9 @@ router.get('/', async (req, res) => {
         location: job.job_location || job.job_city || 'Unknown',
         experience: job.job_experience || extractExperienceFromText(job.job_description),
         skills: job.job_required_skills || extractSkillsFromText(job.job_description),
-        postedOn:
-          job.job_posted_at_datetime_utc
-            ? new Date(job.job_posted_at_datetime_utc).toLocaleDateString()
-            : 'Unknown',
+        postedOn: job.job_posted_at_datetime_utc
+          ? new Date(job.job_posted_at_datetime_utc).toLocaleDateString()
+          : 'Unknown',
       }));
       console.log(externalJobs);
     }

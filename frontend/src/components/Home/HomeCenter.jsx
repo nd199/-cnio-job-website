@@ -5,7 +5,7 @@ import { useState } from 'react';
 const HomeCenter = () => {
   const [jobs, setJobs] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
-  const [hasFetched, setHasFetched] = useState(false); // 👈 tracks if already fetched
+  const [hasFetched, setHasFetched] = useState(false);
 
   const fetchJobs = async () => {
     if (hasFetched) return;

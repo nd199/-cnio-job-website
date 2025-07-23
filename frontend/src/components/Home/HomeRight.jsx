@@ -24,7 +24,7 @@ const HomeRight = () => {
   }, []);
 
   return (
-    <div className="flex-[1.8] max-w-[400px] rounded-xl overflow-hidden bg-white shadow-lg h-[500px] flex flex-col">
+    <div className="flex-[1.8] max-w-[400px] rounded-xl overflow-hidden bg-white shadow-lg h-[700px] flex flex-col">
       <div className="px-4 py-3 text-lg font-semibold text-gray-800 border-b border-gray-200">
         News & Job Feed
       </div>
