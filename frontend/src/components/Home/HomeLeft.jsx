@@ -5,7 +5,17 @@ import { useBlockedWords } from '../../utils/useBlockedWords';
 import AIMaxScreen from './AIMaxScreen';
 import AIMinScreen from './AIMinScreen';
 
-const HomeLeft = () => {
+const HomeLeft = ({ filters, setFilters }) => {
+  const indianCities = [
+    'Bangalore', 'Mumbai', 'Delhi', 'Chennai', 'Hyderabad',
+    'Kolkata', 'Pune', 'Ahmedabad', 'Jaipur', 'Surat',
+    'Coimbatore', 'Indore', 'Lucknow', 'Nagpur', 'Visakhapatnam',
+    'Bhopal', 'Patna', 'Thane', 'Vadodara', 'Ludhiana',
+    'Nashik', 'Rajkot', 'Madurai', 'Kanpur', 'Agra'
+  ];
+  const [locationInput, setLocationInput] = useState('');
+  const [filteredCities, setFilteredCities] = useState(indianCities);
+
   const blockedWords = useBlockedWords();
   const [aiMaxScreen, setAiMaxScreen] = useState(false);
   const [expand, setExpand] = useState(false);
@@ -82,16 +92,140 @@ const HomeLeft = () => {
         </div>
       </div>
       {expand ? (
-        <div className="w-full h-[190px] bg-white rounded-lg shadow-2xl relative">
-          <div className="p-4 font-bold bg-white rounded-lg">Sort / Tags</div>
+        <div className="relative w-full h-auto p-4 space-y-3 bg-white rounded-lg shadow-2xl">
+          <div className="text-lg font-bold">Sort / Tags</div>
+          <div className="space-y-2">
+            <label className="block text-sm font-medium text-gray-700">Experience Level</label>
+            <input
+              type="range"
+              min="0"
+              max="15"
+              value={filters.experience}
+              onChange={(e) =>
+                setFilters({ ...filters, experience: parseInt(e.target.value) })
+              }
+              className="w-full"
+            />
+          </div>
+          <div className="space-y-2">
+            <label className="block text-sm font-medium text-gray-700">Job Type</label>
+            <select
+              value={filters.jobType}
+              onChange={(e) =>
+                setFilters({ ...filters, jobType: e.target.value })
+              }
+              className="w-full p-2 border rounded"
+            >
+              <option value="">Select</option>
+              <option>Full-time</option>
+              <option>Part-time</option>
+              <option>Internship</option>
+              <option>Contract</option>
+            </select>
+          </div>
+          <div className="space-y-2">
+            <label className="block text-sm font-medium text-gray-700">Remote Options</label>
+            <div className="flex gap-4">
+              <label>
+                <input
+                  type="checkbox"
+                  checked={filters.remoteOptions.includes('Remote')}
+                  onChange={(e) => {
+                    const updated = e.target.checked
+                      ? [...filters.remoteOptions, 'Remote']
+                      : filters.remoteOptions.filter((opt) => opt !== 'Remote');
+                    setFilters({ ...filters, remoteOptions: updated });
+                  }}
+                  className="mr-2"
+                />
+                Remote
+              </label>
+              <label>
+                <input
+                  type="checkbox"
+                  checked={filters.remoteOptions.includes('On-site')}
+                  onChange={(e) => {
+                    const updated = e.target.checked
+                      ? [...filters.remoteOptions, 'On-site']
+                      : filters.remoteOptions.filter((opt) => opt !== 'On-site');
+                    setFilters({ ...filters, remoteOptions: updated });
+                  }}
+                  className="mr-2"
+                />
+                On-site
+              </label>
+              <label>
+                <input
+                  type="checkbox"
+                  checked={filters.remoteOptions.includes('Hybrid')}
+                  onChange={(e) => {
+                    const updated = e.target.checked
+                      ? [...filters.remoteOptions, 'Hybrid']
+                      : filters.remoteOptions.filter((opt) => opt !== 'Hybrid');
+                    setFilters({ ...filters, remoteOptions: updated });
+                  }}
+                  className="mr-2"
+                />
+                Hybrid
+              </label>
+            </div>
+          </div>
+          <div className="relative space-y-2">
+            <label className="block text-sm font-medium text-gray-700">Location</label>
+            <input
+              type="text"
+              value={locationInput}
+              onChange={(e) => {
+                const val = e.target.value;
+                setLocationInput(val);
+                setFilters({ ...filters, location: val });
+                setFilteredCities(
+                  indianCities.filter((city) =>
+                    city.toLowerCase().includes(val.toLowerCase())
+                  )
+                );
+              }}
+              placeholder="Type a city, state or country"
+              className="w-full p-2 border rounded"
+            />
+            {locationInput && (
+              <ul className="absolute z-10 w-full mt-1 overflow-y-auto bg-white border rounded shadow-lg max-h-48">
+                {filteredCities.map((city) => (
+                  <li
+                    key={city}
+                    className="px-4 py-2 cursor-pointer hover:bg-gray-100"
+                    onClick={() => {
+                      setLocationInput(city);
+                      setFilters({ ...filters, location: city });
+                    }}
+                  >
+                    {city}
+                  </li>
+                ))}
+              </ul>
+            )}
+          </div>
           <LucideArrowBigDownDash
             className="absolute w-full cursor-pointer -bottom-4 animate-bounce size-6"
             onClick={() => setExpand(!expand)}
           />
         </div>
       ) : (
-        <div className="w-full h-[100px] bg-white rounded-lg shadow-2xl relative">
-          <div className="p-4 font-bold bg-white rounded-lg">Sort / Tags</div>
+        <div className="w-full h-[100px] bg-white rounded-lg shadow-2xl relative p-4">
+          <div className="text-lg font-bold">Sort / Tags</div>
+          <div className="mt-2">
+            <label className="block text-sm font-medium text-gray-700">Experience</label>
+            <input
+              type="range"
+              min="0"
+              max="15"
+              value={filters.experience}
+              onChange={(e) =>
+                setFilters({ ...filters, experience: parseInt(e.target.value) })
+              }
+              className="w-full"
+            />
+          </div>
           <LucideArrowBigDownDash
             className="absolute w-full cursor-pointer -bottom-4 animate-bounce size-6"
             onClick={() => setExpand(!expand)}

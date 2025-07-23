@@ -2,6 +2,22 @@ const express = require('express');
 const router = express.Router();
 const Job = require('../model/Job');
 const { jobPosterRoles, authentication } = require('../utils/middlewares/authMiddleWare');
+const axios = require('axios');
+
+function extractSkillsFromText(description = '') {
+  const skillKeywords = [
+    'Python', 'JavaScript', 'React', 'Flask', 'FastAPI', 'TypeScript', 'Docker',
+    'AWS', 'Azure', 'GCP', 'MongoDB', 'SQL', 'Redux', 'Tailwind', 'Linux'
+  ];
+  return skillKeywords.filter(skill =>
+    description.toLowerCase().includes(skill.toLowerCase())
+  );
+}
+
+function extractExperienceFromText(description = '') {
+  const match = description.match(/(\d+)\+?\s?(?:years|yrs)/i);
+  return match ? `${match[1]} years` : 'Not specified';
+}
 
 router.post('/', async (req, res) => {
   try {
@@ -25,6 +41,7 @@ router.get('/', async (req, res) => {
     page = 1,
     limit = 10,
     postedWithinDays = 7,
+    source = 'all',
   } = req.query;
   let filter = {};
 
@@ -55,15 +72,54 @@ router.get('/', async (req, res) => {
       .limit(limitNumber)
       .populate('postedBy', 'username role');
     const total = await Job.countDocuments(filter);
+    let externalJobs = [];
+
+    if (source === 'all' || source === 'external') {
+      const jSearchRes = await axios.get('https://jsearch.p.rapidapi.com/search', {
+        params: {
+          query: title || 'developer',
+          location: location || 'india',
+          page: 1,
+          num_pages: 1,
+        },
+        headers: {
+          'X-RapidAPI-Key': process.env.JSEARCH_API_KEY,
+          'X-RapidAPI-Host': 'jsearch.p.rapidapi.com',
+        },
+      });
+      externalJobs = jSearchRes.data.data || [];
+      externalJobs = externalJobs.map((job) => ({
+        ...job,
+        title: job.job_title,
+        description: job.job_description,
+        type: job.job_employment_type || 'Full-time',
+        location: job.job_location || job.job_city || 'Unknown',
+        experience: job.job_experience || extractExperienceFromText(job.job_description),
+        skills: job.job_required_skills || extractSkillsFromText(job.job_description),
+        postedOn:
+          job.job_posted_at_datetime_utc
+            ? new Date(job.job_posted_at_datetime_utc).toLocaleDateString()
+            : 'Unknown',
+      }));
+      console.log(externalJobs);
+    }
+
+    const combinedJobs =
+      source === 'external'
+        ? externalJobs
+        : source === 'internal'
+        ? jobs
+        : [...jobs, ...externalJobs];
 
     res.status(200).json({
       page: pageNumber,
       limit: limitNumber,
-      total,
-      totalPages: Math.ceil(total / limitNumber),
-      data: jobs,
+      total: source === 'internal' ? total : combinedJobs.length,
+      totalPages: Math.ceil(combinedJobs.length / limitNumber),
+      data: combinedJobs,
     });
   } catch (error) {
+    console.error('❌ Error fetching jobs:', error.message);
     res.status(500).json({ message: error.message || 'Issue fetching jobs' });
   }
 });
