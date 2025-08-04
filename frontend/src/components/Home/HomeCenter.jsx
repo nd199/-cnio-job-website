@@ -6,6 +6,7 @@ const HomeCenter = () => {
   const [jobs, setJobs] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [hasFetched, setHasFetched] = useState(false);
+  const [error, setError] = useState(null);
 
   const fetchJobs = async () => {
     if (hasFetched) return;
@@ -14,14 +15,16 @@ const HomeCenter = () => {
       const response = await axios.get('http://localhost:3200/jobs?source=all');
       setJobs(response.data?.data || []);
       setHasFetched(true);
+      setError(null);
     } catch (err) {
       console.error('Error fetching jobs:', err);
+      setError('Something went wrong while loading jobs.');
     }
     setIsLoading(false);
   };
 
   return (
-    <div className="flex-[3] w-full h-fit max-h-[calc(100vh-2rem)] overflow-y-auto bg-gray-50 rounded-l px-6 py-4">
+    <div className="flex-[3] w-full h-fit max-h-[calc(120vh-1rem)] overflow-y-auto bg-gray-50 rounded-l px-6 py-4">
       <div className="flex items-center justify-between pb-2 border-b">
         <h2 className="text-2xl font-bold text-gray-800">Job Feed</h2>
         <button
@@ -35,6 +38,7 @@ const HomeCenter = () => {
         >
           <RefreshCcw size={16} /> {hasFetched ? 'Jobs Loaded' : 'Fetch Jobs'}
         </button>
+        {error && <div className="mt-2 text-sm text-red-600">{error}</div>}
       </div>
 
       {isLoading ? (
@@ -51,18 +55,28 @@ const HomeCenter = () => {
             >
               <div>
                 <h3 className="text-lg font-semibold text-blue-700">
-                  {job.title || job.job_title || 'Untitled Job'}
+                  {job.title || 'Untitled Job'}
                 </h3>
                 <p className="mt-1 text-sm text-gray-600 line-clamp-3">
-                  {job.description || job.job_description || 'No description available.'}
+                  {job.description || 'No description available.'}
                 </p>
+
                 <div className="mt-3 space-y-1 text-sm text-gray-500">
                   <p>
                     <strong>Posted by:</strong>{' '}
-                    <span>{job.postedBy?.username || job.employer_name || 'Unknown'}</span>
+                    {job.postedBy?.username ||
+                      job.company?.name ||
+                      job.employer_name ||
+                      job.postedBy ||
+                      'Unknown'}
                   </p>
                   <p>
-                    <strong>Type:</strong> {job.jobType || job.job_employment_type || 'N/A'}
+                    <strong>Type:</strong>{' '}
+                    {job.jobType ||
+                      job.job_employment_type ||
+                      job.contract_type ||
+                      job.type ||
+                      'N/A'}
                   </p>
                   <p>
                     <strong>Skills:</strong>{' '}
@@ -72,7 +86,12 @@ const HomeCenter = () => {
                   </p>
                   <p>
                     <strong>Location:</strong>{' '}
-                    {job.location || job.job_location || job.job_city || job.job_country || 'N/A'}
+                    {job.location ||
+                      job.job_location ||
+                      job.job_city ||
+                      job.job_country ||
+                      job.job_location_display ||
+                      'N/A'}
                   </p>
                   <p>
                     <strong>Experience:</strong>{' '}
@@ -80,9 +99,9 @@ const HomeCenter = () => {
                   </p>
                   <p>
                     <strong>Posted on:</strong>{' '}
-                    {job.createdAt || job.job_posted_at_datetime_utc
+                    {job.createdAt || job.postedOn || job.job_posted_at_datetime_utc
                       ? new Date(
-                          job.createdAt || job.job_posted_at_datetime_utc
+                          job.createdAt || job.postedOn || job.job_posted_at_datetime_utc
                         ).toLocaleDateString()
                       : 'Unknown'}
                   </p>
@@ -90,9 +109,9 @@ const HomeCenter = () => {
               </div>
 
               <div className="flex justify-end mt-4">
-                {job.job_apply_link ? (
+                {job.redirect_url || job.job_apply_link ? (
                   <a
-                    href={job.job_apply_link}
+                    href={job.redirect_url || job.job_apply_link}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="px-4 py-2 text-sm font-medium text-white transition bg-blue-600 rounded hover:bg-blue-700"

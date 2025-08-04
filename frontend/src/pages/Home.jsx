@@ -18,9 +18,6 @@ const Home = () => {
         <HomeCenter filters={filters} />
         <HomeRight />
       </div>
-      <div className="w-full pt-4">
-        <div className="p-4 bg-white rounded-md shadow">Learning Paths</div>
-      </div>
     </div>
   );
 };

@@ -67,7 +67,7 @@ const HomeLeft = ({ filters, setFilters }) => {
       console.error('AI Error:', error);
       setMessages((prev) => [
         ...prev,
-        { text: 'Sorry, something went wrong with AI.', sender: 'ai' },
+        { text: 'Sorry, something went wrong with AI.', sender: 'ai Try again..' },
       ]);
     }
   };
