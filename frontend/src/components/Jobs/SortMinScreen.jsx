@@ -2,7 +2,7 @@ import { LucideArrowBigDownDash } from 'lucide-react';
 import Slider from 'rc-slider';
 import 'rc-slider/assets/index.css';
 
-const SortMaxScreen = ({ filters, setFilters, setExpand, expand }) => {
+const SortMinScreen = ({ filters, setFilters, setExpand, expand }) => {
   return (
     <div className="w-full h-[140px] bg-white rounded-lg shadow-2xl relative p-4">
       <div className="text-lg font-bold">Sort / Filter</div>
@@ -29,4 +29,4 @@ const SortMaxScreen = ({ filters, setFilters, setExpand, expand }) => {
   );
 };
 
-export default SortMaxScreen;
+export default SortMinScreen;

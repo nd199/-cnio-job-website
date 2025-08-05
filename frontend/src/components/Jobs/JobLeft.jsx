@@ -8,7 +8,7 @@ import AIMinScreen from './AIMinScreen';
 import SortMaxScreen from './SortMaxScreen';
 import SortMinScreen from './SortMinScreen';
 
-const HomeLeft = ({ filters, setFilters }) => {
+const JobLeft = ({ filters, setFilters }) => {
   const [locationInput, setLocationInput] = useState('');
   const [filteredCities, setFilteredCities] = useState(indianCities);
   const blockedWords = useBlockedWords();
@@ -73,52 +73,57 @@ const HomeLeft = ({ filters, setFilters }) => {
   };
 
   return (
-    <div className="xs:hidden md:flex lg:flex xl:flex flex-[1.8] max-w-[400px] rounded-lg flex items-center flex-col gap-4 h-auto">
-      <div className="mt-2 w-full max-h-[500px] bg-white rounded-lg shadow-2xl font-bold">
-        <div className="flex flex-col items-center justify-center w-full text-lg bg-transparent shadow-sm">
-          <AIMinScreen
-            aiMaxScreen={aiMaxScreen}
-            setAiMaxScreen={setAiMaxScreen}
-            input={input}
-            setInput={setInput}
-            sendMessage={sendMessage}
-            messages={messages}
+    <>
+      <div className="xs:hidden md:flex lg:flex flex-[1.8] max-w-[420px] rounded-2xl bg-white/60 backdrop-blur-lg shadow-[0_8px_30px_rgb(0,0,0,0.12)] border border-white/20 p-4 gap-6 flex-col items-center h-auto transition-all duration-500">
+        <div className="w-full max-h-[500px] bg-white/70 backdrop-blur-lg border border-white/20 rounded-2xl shadow-xl transition-all duration-300">
+          <div className="flex flex-col items-center justify-center w-full text-lg bg-transparent shadow-sm">
+            <AIMinScreen
+              aiMaxScreen={aiMaxScreen}
+              setAiMaxScreen={setAiMaxScreen}
+              input={input}
+              setInput={setInput}
+              sendMessage={sendMessage}
+              messages={messages}
+            />
+          </div>
+        </div>
+
+        {expand ? (
+          <SortMaxScreen
+            filters={filters}
+            setFilters={setFilters}
+            locationInput={locationInput}
+            filteredCities={filteredCities}
+            setLocationInput={setLocationInput}
+            setFilteredCities={setFilteredCities}
+            indianCities={indianCities}
+            setExpand={setExpand}
+            expand={expand}
           />
+        ) : (
+          <SortMinScreen
+            filters={filters}
+            setFilters={setFilters}
+            setExpand={setExpand}
+            expand={expand}
+          />
+        )}
+        <div className="w-full h-[190px] bg-white/50 backdrop-blur-md rounded-2xl shadow-md border border-white/20">
+          <div className="p-4 font-bold bg-white rounded-lg"></div>
         </div>
       </div>
-      {expand ? (
-        <SortMinScreen
-          filters={filters}
-          setFilters={setFilters}
-          locationInput={locationInput}
-          filteredCities={filteredCities}
-          setLocationInput={setLocationInput}
-          setFilteredCities={setFilteredCities}
-          indianCities={indianCities}
-          setExpand={setExpand}
-          expand={expand}
-        />
-      ) : (
-        <SortMaxScreen
-          filters={filters}
-          setFilters={setFilters}
-          setExpand={setExpand}
-          expand={expand}
+      {aiMaxScreen && (
+        <AIMaxScreen
+          aiMaxScreen={aiMaxScreen}
+          setAiMaxScreen={setAiMaxScreen}
+          input={input}
+          setInput={setInput}
+          sendMessage={sendMessage}
+          messages={messages}
         />
       )}
-      <div className="w-full h-[190px] bg-white rounded-lg shadow-2xl relative">
-        <div className="p-4 font-bold bg-white rounded-lg"></div>
-      </div>
-      <AIMaxScreen
-        aiMaxScreen={aiMaxScreen}
-        setAiMaxScreen={setAiMaxScreen}
-        input={input}
-        setInput={setInput}
-        sendMessage={sendMessage}
-        messages={messages}
-      />
-    </div>
+    </>
   );
 };
 
-export default HomeLeft;
+export default JobLeft;

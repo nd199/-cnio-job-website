@@ -2,7 +2,7 @@ import axios from 'axios';
 import { Loader2, RefreshCcw, SearchIcon } from 'lucide-react';
 import { useState } from 'react';
 
-const HomeCenter = () => {
+const JobCenter = () => {
   const [jobs, setJobs] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [hasFetched, setHasFetched] = useState(false);
@@ -84,14 +84,13 @@ const HomeCenter = () => {
             {filteredJobs?.map((job, index) => (
               <div
                 key={index}
-                className="flex flex-col justify-between h-fit p-6 transition-shadow bg-white border border-gray-100
-                shadow-md rounded-xl hover:shadow-lg flex-[1_1_100%] md:flex-[1_1_48%] xl:flex-[1_1_31%]"
+                className="group relative flex flex-col justify-between h-full p-6 bg-white rounded-2xl border border-gray-200 shadow-[0_8px_30px_rgb(0,0,0,0.05)] hover:shadow-xl transition-shadow duration-300 ease-in-out flex-[1_1_100%] md:flex-[1_1_48%] xl:flex-[1_1_31%] overflow-hidden"
               >
-                <div>
-                  <h3 className="text-lg font-semibold text-blue-700">
+                <div className="flex flex-col gap-2">
+                  <h3 className="text-xl text-wrap font-bold text-gray-800 group-hover:text-blue-600 transition">
                     {job.title || 'Untitled Job'}
                   </h3>
-                  <p className="mt-1 text-sm text-gray-600 line-clamp-3">
+                  <p className="text-sm text-gray-600 line-clamp-3">
                     {job.description || 'No description available.'}
                   </p>
 
@@ -142,19 +141,19 @@ const HomeCenter = () => {
                   </div>
                 </div>
 
-                <div className="flex justify-end mt-4">
+                <div className="mt-6 flex justify-end">
                   {job.redirect_url || job.job_apply_link ? (
                     <a
                       href={job.redirect_url || job.job_apply_link}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="px-4 py-2 text-sm font-medium text-white transition bg-blue-600 rounded hover:bg-blue-700"
+                      className="px-5 py-2 text-sm font-medium text-white bg-blue-600 rounded-full shadow hover:bg-blue-700 transition-all"
                     >
                       Apply Now
                     </a>
                   ) : (
                     <button
-                      className="px-4 py-2 text-sm font-medium text-white bg-gray-400 rounded cursor-not-allowed"
+                      className="px-5 py-2 text-sm font-medium text-white bg-blue-600 rounded-full shadow hover:bg-blue-700 transition-all"
                       disabled
                     >
                       Apply Info Missing
@@ -174,4 +173,4 @@ const HomeCenter = () => {
   );
 };
 
-export default HomeCenter;
+export default JobCenter;

@@ -4,7 +4,6 @@ const Job = require('../model/Job');
 const axios = require('axios');
 const { jobPosterRoles, authentication } = require('../utils/middlewares/authMiddleWare');
 
-
 const ADZUNA_APP_ID = process.env.ADZUNA_APP_ID || '';
 const ADZUNA_APP_KEY = process.env.ADZUNA_APP_KEY || '';
 

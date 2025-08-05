@@ -2,7 +2,7 @@ import { LucideArrowBigDownDash } from 'lucide-react';
 import Slider from 'rc-slider';
 import 'rc-slider/assets/index.css';
 
-const SortMinScreen = ({
+const SortMaxScreen = ({
   filters,
   setFilters,
   locationInput,
@@ -16,7 +16,7 @@ const SortMinScreen = ({
   return (
     <div className="relative w-full h-auto p-10 space-y-3 bg-white rounded-lg shadow-2xl">
       <div className="p-0 m-0 text-lg font-bold">Sort / Tags</div>
-      <div className="py-10">
+      <div className="pt-5 pb-10">
         <label className="block text-sm font-medium text-gray-700">Experience Level</label>
         <Slider
           min={0}
@@ -47,7 +47,7 @@ const SortMinScreen = ({
       </div>
       <div className="space-y-2">
         <label className="block text-sm font-medium text-gray-700">Remote Options</label>
-        <div className="flex gap-4">
+        <div className="flex flex-col gap-4">
           <label>
             <input
               type="checkbox"
@@ -133,4 +133,4 @@ const SortMinScreen = ({
   );
 };
 
-export default SortMinScreen;
+export default SortMaxScreen;
