@@ -73,7 +73,7 @@ const HomeLeft = ({ filters, setFilters }) => {
   };
 
   return (
-    <div className="flex-[1.8] max-w-[400px] rounded-lg flex items-center flex-col gap-4 h-auto">
+    <div className="xs:hidden md:flex lg:flex xl:flex flex-[1.8] max-w-[400px] rounded-lg flex items-center flex-col gap-4 h-auto">
       <div className="mt-2 w-full max-h-[500px] bg-white rounded-lg shadow-2xl font-bold">
         <div className="flex flex-col items-center justify-center w-full text-lg bg-transparent shadow-sm">
           <AIMinScreen

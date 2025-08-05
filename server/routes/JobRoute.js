@@ -4,6 +4,7 @@ const Job = require('../model/Job');
 const axios = require('axios');
 const { jobPosterRoles, authentication } = require('../utils/middlewares/authMiddleWare');
 
+
 const ADZUNA_APP_ID = process.env.ADZUNA_APP_ID || '';
 const ADZUNA_APP_KEY = process.env.ADZUNA_APP_KEY || '';
 
@@ -29,8 +30,14 @@ const extractSkillsFromText = (description = '') => {
 };
 
 const extractExperienceFromText = (description = '') => {
-  const match = description.match(/(\d+)\+?\s?(?:years|yrs)/i);
-  return match ? `${match[1]} years` : 'Not specified';
+  const rangeMatch = description.match(/(\d+)\s*(?:to|-)\s*(\d+)\s*(?:years|yrs)/i);
+  if (rangeMatch) return `${rangeMatch[1]} to ${rangeMatch[2]} years`;
+
+  const singleMatch = description.match(/(\d+)\+?\s?(?:years|yrs)/i);
+  const value = singleMatch ? parseInt(singleMatch[1], 10) : null;
+
+  if (value && value < 50) return `${value} years`;
+  return 'Not specified';
 };
 
 // Create Job (Internal)
@@ -145,14 +152,13 @@ router.get('/', async (req, res) => {
           description: job.description || '',
           type: job.contract_time || 'Full-time',
           location: job.location?.display_name || 'Unknown',
-          experience: extractExperienceFromText(job.description),
+          experience: extractExperienceFromText(job.description) || 'Not specified',
           skills: extractSkillsFromText(job.description),
           postedOn: job.created || '',
           redirect_url: job.redirect_url || '',
           postedBy: job.company?.display_name || 'Unknown',
           source: 'adzuna',
         }));
-
         externalJobs = externalJobs.concat(adzunaJobs);
       } catch (err) {
         console.error('❌ Adzuna Error:', err.response?.data || err.message);

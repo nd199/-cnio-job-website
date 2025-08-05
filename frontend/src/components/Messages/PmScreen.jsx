@@ -125,7 +125,7 @@ const PmScreen = ({ setShowMessages }) => {
           </AnimatePresence>
         </div>
 
-        <ul className="flex gap-2 px-3 py-2 text-sm text-gray-800 border-b-2 border-gray-200 justify-evenly">
+        <ul className="flex gap-2 px-3 py-2 text-sm text-gray-800 border-b-2 border-gray-200 xs:overflow-scroll justify-evenly">
           {tabs.map((tab) => (
             <li
               key={tab}

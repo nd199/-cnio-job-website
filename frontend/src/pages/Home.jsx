@@ -13,7 +13,7 @@ const Home = () => {
 
   return (
     <div className="w-full px-4">
-      <div className="flex flex-row gap-4 mt-4">
+      <div className="flex flex-row gap-4 mt-4 xs:mb-20">
         <HomeLeft filters={filters} setFilters={setFilters} />
         <HomeCenter filters={filters} />
         <HomeRight />

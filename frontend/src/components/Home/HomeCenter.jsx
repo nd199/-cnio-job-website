@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { Loader2, RefreshCcw } from 'lucide-react';
+import { Loader2, RefreshCcw, SearchIcon } from 'lucide-react';
 import { useState } from 'react';
 
 const HomeCenter = () => {
@@ -7,6 +7,25 @@ const HomeCenter = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [hasFetched, setHasFetched] = useState(false);
   const [error, setError] = useState(null);
+  const [searchTerm, setSearchTerm] = useState('');
+
+  const filteredJobs = jobs.filter((job) => {
+    const lowerCaseSearchTerm = searchTerm.toLowerCase();
+    if (!searchTerm.trim()) return true;
+    return (
+      (job.title && job.title.toLowerCase().includes(lowerCaseSearchTerm)) ||
+      (job.description && job.description.toLowerCase().includes(lowerCaseSearchTerm)) ||
+      (job.skills &&
+        job.skills.some((skill) => skill.toLowerCase().includes(lowerCaseSearchTerm))) ||
+      (job.location && job.location.toLowerCase().includes(lowerCaseSearchTerm)) ||
+      (job.company && job.company.name.toLowerCase().includes(lowerCaseSearchTerm))
+    );
+  });
+
+  const handleSearchEvents = (e) => {
+    const value = e.target.value;
+    setSearchTerm(value);
+  };
 
   const fetchJobs = async () => {
     if (hasFetched) return;
@@ -47,88 +66,104 @@ const HomeCenter = () => {
           <span>Loading jobs...</span>
         </div>
       ) : hasFetched ? (
-        <div className="flex flex-wrap gap-6 mt-4">
-          {jobs?.map((job, index) => (
-            <div
-              key={index}
-              className="flex flex-col justify-between h-full p-6 transition-shadow bg-white border border-gray-100 shadow-md rounded-xl hover:shadow-lg flex-[1_1_100%] md:flex-[1_1_48%] xl:flex-[1_1_31%]"
-            >
-              <div>
-                <h3 className="text-lg font-semibold text-blue-700">
-                  {job.title || 'Untitled Job'}
-                </h3>
-                <p className="mt-1 text-sm text-gray-600 line-clamp-3">
-                  {job.description || 'No description available.'}
-                </p>
+        <div className="flex flex-col items-center w-full gap-4 mt-4">
+          <div
+            className="flex items-center justify-between border-2 border-black hover:border-primaryHover
+          rounded-2xl p-2 relative lg:w-[350px]"
+          >
+            <SearchIcon className="p-0 m-0 text-xl text-black cursor-pointer hover:text-primaryHover" />
+            <input
+              className="w-full ml-2 bg-transparent border-none outline-none"
+              placeholder="Search Jobs..."
+              value={searchTerm}
+              aria-label="Search jobs"
+              onChange={handleSearchEvents}
+            />
+          </div>
+          <div className="flex flex-wrap gap-6 mt-4">
+            {filteredJobs?.map((job, index) => (
+              <div
+                key={index}
+                className="flex flex-col justify-between h-fit p-6 transition-shadow bg-white border border-gray-100
+                shadow-md rounded-xl hover:shadow-lg flex-[1_1_100%] md:flex-[1_1_48%] xl:flex-[1_1_31%]"
+              >
+                <div>
+                  <h3 className="text-lg font-semibold text-blue-700">
+                    {job.title || 'Untitled Job'}
+                  </h3>
+                  <p className="mt-1 text-sm text-gray-600 line-clamp-3">
+                    {job.description || 'No description available.'}
+                  </p>
 
-                <div className="mt-3 space-y-1 text-sm text-gray-500">
-                  <p>
-                    <strong>Posted by:</strong>{' '}
-                    {job.postedBy?.username ||
-                      job.company?.name ||
-                      job.employer_name ||
-                      job.postedBy ||
-                      'Unknown'}
-                  </p>
-                  <p>
-                    <strong>Type:</strong>{' '}
-                    {job.jobType ||
-                      job.job_employment_type ||
-                      job.contract_type ||
-                      job.type ||
-                      'N/A'}
-                  </p>
-                  <p>
-                    <strong>Skills:</strong>{' '}
-                    {Array.isArray(job.skills)
-                      ? job.skills.join(', ')
-                      : job.job_required_skills?.join(', ') || 'Not specified'}
-                  </p>
-                  <p>
-                    <strong>Location:</strong>{' '}
-                    {job.location ||
-                      job.job_location ||
-                      job.job_city ||
-                      job.job_country ||
-                      job.job_location_display ||
-                      'N/A'}
-                  </p>
-                  <p>
-                    <strong>Experience:</strong>{' '}
-                    {job.experience || job.job_experience || 'Not specified'}
-                  </p>
-                  <p>
-                    <strong>Posted on:</strong>{' '}
-                    {job.createdAt || job.postedOn || job.job_posted_at_datetime_utc
-                      ? new Date(
-                          job.createdAt || job.postedOn || job.job_posted_at_datetime_utc
-                        ).toLocaleDateString()
-                      : 'Unknown'}
-                  </p>
+                  <div className="mt-3 space-y-1 text-sm text-gray-500">
+                    <p>
+                      <strong>Posted by:</strong>{' '}
+                      {job.postedBy?.username ||
+                        job.company?.name ||
+                        job.employer_name ||
+                        job.postedBy ||
+                        'Unknown'}
+                    </p>
+                    <p>
+                      <strong>Type:</strong>{' '}
+                      {job.jobType ||
+                        job.job_employment_type ||
+                        job.contract_type ||
+                        job.type ||
+                        'N/A'}
+                    </p>
+                    <p>
+                      <strong>Skills:</strong>{' '}
+                      {Array.isArray(job.skills)
+                        ? job.skills.join(', ')
+                        : job.job_required_skills?.join(', ') || 'Not specified'}
+                    </p>
+                    <p>
+                      <strong>Location:</strong>{' '}
+                      {job.location ||
+                        job.job_location ||
+                        job.job_city ||
+                        job.job_country ||
+                        job.job_location_display ||
+                        'N/A'}
+                    </p>
+                    <p>
+                      <strong>Experience:</strong>{' '}
+                      {job.experience || job.job_experience || 'Not specified'}
+                    </p>
+                    <p>
+                      <strong>Posted on:</strong>{' '}
+                      {job.createdAt || job.postedOn || job.job_posted_at_datetime_utc
+                        ? new Date(
+                            job.createdAt || job.postedOn || job.job_posted_at_datetime_utc
+                          ).toLocaleDateString()
+                        : 'Unknown'}
+                    </p>
+                  </div>
+                </div>
+
+                <div className="flex justify-end mt-4">
+                  {job.redirect_url || job.job_apply_link ? (
+                    <a
+                      href={job.redirect_url || job.job_apply_link}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="px-4 py-2 text-sm font-medium text-white transition bg-blue-600 rounded hover:bg-blue-700"
+                    >
+                      Apply Now
+                    </a>
+                  ) : (
+                    <button
+                      className="px-4 py-2 text-sm font-medium text-white bg-gray-400 rounded cursor-not-allowed"
+                      disabled
+                    >
+                      Apply Info Missing
+                    </button>
+                  )}
                 </div>
               </div>
-
-              <div className="flex justify-end mt-4">
-                {job.redirect_url || job.job_apply_link ? (
-                  <a
-                    href={job.redirect_url || job.job_apply_link}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="px-4 py-2 text-sm font-medium text-white transition bg-blue-600 rounded hover:bg-blue-700"
-                  >
-                    Apply Now
-                  </a>
-                ) : (
-                  <button
-                    className="px-4 py-2 text-sm font-medium text-white bg-gray-400 rounded cursor-not-allowed"
-                    disabled
-                  >
-                    Apply Info Missing
-                  </button>
-                )}
-              </div>
-            </div>
-          ))}
+            ))}
+          </div>
         </div>
       ) : (
         <div className="mt-8 text-center text-gray-500">

@@ -2,50 +2,41 @@ import { Briefcase, Building2, Home, Mail, UserCircle2Icon } from 'lucide-react'
 
 const BottomNav = () => {
   return (
-    <nav className="bottom-0 left-0 right-0 bg-white shadow-md border-t border-gray-300 flex justify-around items-center h-16">
+    <nav className="bottom-0 left-0 right-0 flex items-center justify-around h-16 bg-white border-t border-gray-300 shadow-md">
       <a
         href="#"
-        className="flex flex-col items-center justify-center text-subheading text-black hover:text-primaryHover"
+        className="flex flex-col items-center justify-center text-black text-subheading hover:text-primaryHover"
         aria-label="Home"
       >
         <Home size={20} />
-        <span className="text-xs mt-1">Home</span>
+        <span className="mt-1 text-xs">Home</span>
       </a>
 
       <a
         href="#"
-        className="flex flex-col items-center justify-center text-subheading text-black hover:text-primaryHover"
+        className="flex flex-col items-center justify-center text-black text-subheading hover:text-primaryHover"
         aria-label="Jobs"
       >
         <Briefcase size={20} />
-        <span className="text-xs mt-1">Jobs</span>
+        <span className="mt-1 text-xs">Jobs</span>
       </a>
 
       <a
         href="#"
-        className="flex flex-col items-center justify-center text-subheading text-black hover:text-primaryHover"
+        className="flex flex-col items-center justify-center text-black text-subheading hover:text-primaryHover"
         aria-label="Companies"
       >
         <Building2 size={20} />
-        <span className="text-xs mt-1">Companies</span>
+        <span className="mt-1 text-xs">Companies</span>
       </a>
 
       <a
         href="#"
-        className="flex flex-col items-center justify-center text-subheading text-black hover:text-primaryHover"
+        className="flex flex-col items-center justify-center text-black text-subheading hover:text-primaryHover"
         aria-label="Contact"
       >
         <Mail size={20} />
-        <span className="text-xs mt-1">Contact</span>
-      </a>
-
-      <a
-        href="#"
-        className="flex flex-col items-center justify-center text-subheading text-black hover:text-primaryHover"
-        aria-label="Profile"
-      >
-        <UserCircle2Icon size={20} />
-        <span className="text-xs mt-1">Profile</span>
+        <span className="mt-1 text-xs">Contact</span>
       </a>
     </nav>
   );
