@@ -28,24 +28,24 @@ const Navbar = ({ setShowMessages }) => {
   };
 
   return (
-    <div className="w-full fixed top-0 flex justify-between items-center px-10 h-20 shadow-md font-body z-[200] bg-gradient-to-br from-slate-950 via-zinc-900 to-slate-800 text-white">
+    <div className="w-full fixed top-0 text-xl flex justify-between items-center px-10 h-20 shadow-md font-body z-[200] bg-gradient-to-br from-slate-950 via-zinc-900 to-slate-800 text-white">
       <div className="hidden text-2xl cursor-pointer sm:flex font-heading text-primary">
         <Link to="/">CN.IO Jobs</Link>
       </div>
 
       <ul className="flex-row items-center justify-between hidden gap-4 lg:flex relative">
-        <li className="flex items-center gap-2 text-white hover:text-pink-400 text-subheading">
-          <Home />
+        <li className="flex items-center gap-2 text-white hover:hover:text-[var(--accent)]  text-subheading">
+          <Home size={28} />
           <Link to="/">Home</Link>
         </li>
 
         <li
-          className="relative flex items-center gap-2 text-white hover:text-pink-400 text-subheading cursor-pointer"
+          className="relative flex items-center gap-2 text-white hover:text-[var(--accent)] text-subheading cursor-pointer"
           onClick={() => setShowJobCategories((prev) => !prev)}
           onMouseLeave={handleMouseLeave}
           onMouseEnter={handleMouseEnter}
         >
-          <Briefcase />
+          <Briefcase size={28} />
           <span>Jobs</span>
           <ChevronDown className="w-4 h-4" />
           {showJobsCategories && (
@@ -54,18 +54,18 @@ const Navbar = ({ setShowMessages }) => {
               onMouseEnter={handleMouseEnter}
               className="absolute top-full left-0 mt-2 z-50"
             >
-              <JobCategories />
+              <JobCategories size={28} />
             </div>
           )}
         </li>
 
-        <li className="flex items-center gap-2 text-white hover:text-pink-400 text-subheading">
-          <Building2 />
+        <li className="flex items-center gap-2 text-white hover:text-[var(--accent)] text-subheading">
+          <Building2 size={28} />
           <a href="#">Companies</a>
         </li>
 
-        <li className="flex items-center gap-2 text-white hover:text-pink-400 text-subheading">
-          <Mail />
+        <li className="flex items-center gap-2 text-white hover:text-[var(--accent)] text-subheading">
+          <Mail size={28} />
           <a href="#">Contact Us</a>
         </li>
       </ul>
@@ -73,10 +73,10 @@ const Navbar = ({ setShowMessages }) => {
       <div className="flex items-center gap-4">
         <MessageSquareMoreIcon
           size={28}
-          className="text-white cursor-pointer hover:text-pink-400"
+          className="text-white cursor-pointer hover:text-[var(--accent)]"
           onClick={() => setShowMessages(true)}
         />
-        <Link to="/profile" className="text-white hover:text-pink-400">
+        <Link to="/profile" className="text-white hover:text-[var(--accent)]">
           <UserCircle2Icon size={28} />
         </Link>
       </div>
