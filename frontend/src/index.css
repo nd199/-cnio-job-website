@@ -15,3 +15,47 @@ body {
   background-color: var(--background);
   color: var(--text);
 }
+
+.slick-list,
+.slick-track {
+  height: auto;
+}
+
+.slick-dots li button:before {
+  color: var(--accent);
+  opacity: 0.7;
+  font-size: 12px;
+}
+
+.slick-dots li.slick-active button:before {
+  color: var(--highlight);
+  opacity: 1;
+}
+
+.slick-prev,
+.slick-next {
+  top: 45%;
+  width: 36px;
+  height: 36px;
+  background-color: rgba(255, 255, 255, 0.15);
+  border-radius: 50%;
+  transition: background-color 0.3s ease;
+}
+
+.slick-prev:hover,
+.slick-next:hover {
+  background-color: var(--accent);
+}
+
+.slick-slide > div {
+  padding: 0 10px;
+  transition: transform 0.4s ease-in-out;
+}
+
+.slick-slider {
+  margin-bottom: 0px;
+}
+
+.slick-dots {
+  margin-top: 12px;
+}

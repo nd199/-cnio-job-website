@@ -42,14 +42,14 @@ const features = [
 const Features = () => {
   return (
     <div className="relative snap-start min-h-screen h-fit flex flex-col items-center justify-start pt-2 bg-gradient-to-br">
-      <div className="absolute inset-0 bg-[url('/images/interview.jpg')] bg-cover bg-center bg-no-repeat opacity-70"></div>
+      <div className="absolute inset-0 bg-[url('/images/interview.jpg')] bg-cover bg-center bg-no-repeat opacity-20"></div>
       <div className="relative z-10 w-full flex flex-col items-center">
-        <h1 className="text-3xl md:text-4xl font-bold text-white mb-10">Why Cn.io?</h1>
+        <h1 className="text-3xl md:text-4xl font-bold text-white mb-3">Why Cn.io?</h1>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 gap-4 max-w-6xl w-full">
           {features.map((feature, i) => (
             <div
               key={i}
-              className="bg-white/10 backdrop-blur-xl p-6 rounded-2xl border border-white/10 shadow-xl hover:shadow-2xl transition duration-300 hover:border-[var(--primary)] hover:scale-[1.03] flex flex-col items-center text-center gap-6"
+              className="bg-white/10 backdrop-blur-xl p-6 rounded-2xl border border-white/10 shadow-2l hover:shadow-2xl transition duration-300 hover:border-[var(--primary)] hover:scale-[1.03] flex flex-col items-center text-center gap-4"
             >
               <div className="w-40 h-40">{feature.icon}</div>
               <div className="flex flex-col items-center gap-4">

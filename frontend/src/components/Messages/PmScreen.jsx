@@ -54,23 +54,20 @@ const PmScreen = ({ setShowMessages }) => {
 
   return (
     <>
-      <div className="w-full md:w-[450px] h-full absolute right-0 bg-white shadow-md z-40 flex flex-col">
-        <div className="relative flex items-center justify-between w-full px-2 py-4 border-b-2 border-gray-200">
-          <X
-            className="cursor-pointer hover:text-primaryHover"
-            onClick={() => setShowMessages(false)}
-          />
-          <div className="flex items-center flex-1 h-[40px] px-4 mx-2 border-2 border-gray-300 px-02 hover:border-primaryHover rounded-xl">
-            <SearchIcon className="text-gray-500" />
+      <div className="w-full md:w-[450px] h-full absolute right-0 bg-black shadow-md z-40 flex flex-col">
+        <div className="relative flex items-center justify-between w-full px-2 py-4 border-b-2 border-gray-700">
+          <X className="cursor-pointer hover:text-white" onClick={() => setShowMessages(false)} />
+          <div className="flex items-center flex-1 h-[40px] px-4 mx-2 border-2 border-gray-700 px-02 hover:border-white rounded-xl">
+            <SearchIcon className="text-white" />
             <input
-              className="w-full ml-2 bg-transparent border-none outline-none"
+              className="w-full ml-2 bg-transparent border-none outline-none text-white placeholder-gray-400"
               placeholder="Search Conversation..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
             />
           </div>
           <MoreVertical
-            className="cursor-pointer"
+            className="cursor-pointer text-white"
             onClick={() => setShowMoreMenu((prev) => !prev)}
           />
           <AnimatePresence>
@@ -79,10 +76,10 @@ const PmScreen = ({ setShowMessages }) => {
                 initial={{ opacity: 0, y: -10 }}
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -10 }}
-                className="absolute top-16 right-4 w-[200px] bg-white border border-gray-300 shadow-lg rounded-md p-4 z-50"
+                className="absolute top-16 right-4 w-[200px] bg-black border border-gray-700 shadow-lg rounded-md p-4 z-50"
               >
                 <div className="mb-4">
-                  <label htmlFor="sortBy" className="block mb-1 text-sm font-medium">
+                  <label htmlFor="sortBy" className="block mb-1 text-sm font-medium text-white">
                     Sort By
                   </label>
                   <select
@@ -92,18 +89,22 @@ const PmScreen = ({ setShowMessages }) => {
                       setSortBy(e.target.value);
                       setShowMoreMenu(false);
                     }}
-                    className="w-full p-2 border border-gray-300 rounded-md"
+                    className="w-full p-2 border border-gray-700 rounded-md bg-black text-white"
                   >
                     <option>Newest</option>
                     <option>Oldest</option>
                   </select>
                 </div>
                 <div className="flex items-center gap-2 mb-4">
-                  <input type="checkbox" onClick={() => setShowMoreMenu(false)} />
-                  <span className="text-sm">Mute notifications</span>
+                  <input
+                    type="checkbox"
+                    className="accent-white"
+                    onClick={() => setShowMoreMenu(false)}
+                  />
+                  <span className="text-sm text-white">Mute notifications</span>
                 </div>
                 <button
-                  className="w-full py-1 mb-2 text-white bg-blue-600 rounded-md hover:bg-blue-700"
+                  className="w-full py-1 mb-2 text-white bg-cyan-600 rounded-md hover:bg-cyan-700"
                   onClick={() => {
                     markAllAsRead();
                     setShowMoreMenu(false);
@@ -125,15 +126,15 @@ const PmScreen = ({ setShowMessages }) => {
           </AnimatePresence>
         </div>
 
-        <ul className="flex gap-2 px-3 py-2 text-sm text-gray-800 border-b-2 border-gray-200 xs:overflow-scroll justify-evenly">
+        <ul className="flex gap-2 px-3 py-2 text-sm text-gray-300 border-b-2 border-gray-700 xs:overflow-scroll justify-evenly">
           {tabs.map((tab) => (
             <li
               key={tab}
               onClick={() => setMessageCategory(tab)}
               className={`px-3 py-1 rounded-full cursor-pointer border-[2px] transition-all ${
                 messageCategory === tab
-                  ? 'bg-primary text-white border-primary'
-                  : 'border-primary hover:border-green-800'
+                  ? 'bg-cyan-600 text-white border-cyan-600'
+                  : 'border-gray-700 hover:border-cyan-400 text-gray-300 hover:text-white'
               }`}
             >
               {tab}
@@ -141,10 +142,10 @@ const PmScreen = ({ setShowMessages }) => {
           ))}
         </ul>
 
-        <div className="flex-1 px-2 py-2 overflow-y-auto">
+        <div className="flex-1 px-2 py-2 overflow-y-auto text-white scrollbar-thin scrollbar-thumb-cyan-600 scrollbar-track-black">
           {filteredMessages().length === 0 ? (
-            <div className="flex flex-col items-center justify-center h-full text-center text-gray-500">
-              <Mail className="w-12 h-12 mb-2 opacity-30" />
+            <div className="flex flex-col items-center justify-center h-full text-center text-gray-400">
+              <Mail className="w-12 h-12 mb-2 opacity-50" />
               <p className="font-semibold">No messages found</p>
               <p className="text-sm text-gray-400">Try changing filters or search keywords</p>
             </div>
@@ -181,7 +182,7 @@ const PmScreen = ({ setShowMessages }) => {
               leaveFrom="opacity-100 scale-100"
               leaveTo="opacity-0 scale-95"
             >
-              <Dialog.Panel className="w-full max-w-md p-6 overflow-hidden text-left align-middle transition-all transform bg-white shadow-xl rounded-2xl">
+              <Dialog.Panel className="w-full max-w-md p-6 overflow-hidden text-left align-middle transition-all transform bg-black border border-gray-700 shadow-xl rounded-2xl text-white">
                 <Dialog.Title as="h3" className="text-lg font-bold leading-6 text-gray-900">
                   Clear Chat History
                 </Dialog.Title>
