@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { Loader2, RefreshCcw, SearchIcon } from 'lucide-react';
+import { Loader2, MapPin, RefreshCcw, SearchIcon } from 'lucide-react';
 import { useState } from 'react';
 
 const JobCenter = () => {
@@ -8,18 +8,23 @@ const JobCenter = () => {
   const [hasFetched, setHasFetched] = useState(false);
   const [error, setError] = useState(null);
   const [searchTerm, setSearchTerm] = useState('');
+  const [locationSearch, setLocationSearch] = useState('');
 
   const filteredJobs = jobs.filter((job) => {
-    const lowerCaseSearchTerm = searchTerm.toLowerCase();
-    if (!searchTerm.trim()) return true;
-    return (
+    const lowerCaseSearchTerm = (searchTerm || '').trim().toLowerCase();
+    const location = (locationSearch || '').trim().toLowerCase();
+    if (!lowerCaseSearchTerm && !location) return true;
+
+    const matchesSearch =
+      !lowerCaseSearchTerm ||
       (job.title && job.title.toLowerCase().includes(lowerCaseSearchTerm)) ||
       (job.description && job.description.toLowerCase().includes(lowerCaseSearchTerm)) ||
-      (job.skills &&
-        job.skills.some((skill) => skill.toLowerCase().includes(lowerCaseSearchTerm))) ||
-      (job.location && job.location.toLowerCase().includes(lowerCaseSearchTerm)) ||
-      (job.company && job.company.name.toLowerCase().includes(lowerCaseSearchTerm))
-    );
+      (job.company && job.company.toLowerCase().includes(lowerCaseSearchTerm));
+
+    const matchesLocation =
+      !location || (job.location && job.location.toLowerCase().includes(location));
+
+    return matchesSearch && matchesLocation;
   });
 
   const handleSearchEvents = (e) => {
@@ -43,7 +48,7 @@ const JobCenter = () => {
   };
 
   return (
-    <div className="flex-[3] w-full h-fit max-h-[calc(120vh-1rem)] overflow-y-auto bg-gray-50 rounded-l px-6 py-4">
+    <div className="flex-[3] w-full h-screen no-scrollbar overflow-y-auto bg-gray-50 rounded-l px-6">
       <div className="flex items-center justify-between pb-2 border-b">
         <h2 className="text-2xl font-bold text-gray-800">Job Feed</h2>
         <button
@@ -69,15 +74,31 @@ const JobCenter = () => {
         <div className="flex flex-col items-center w-full gap-4 mt-4">
           <div
             className="flex items-center justify-between border-2 border-black hover:border-primaryHover
-          rounded-2xl p-2 relative lg:w-[350px]"
+          rounded-2xl p-2 relative lg:w-[600px] h-[70px]"
           >
-            <SearchIcon className="p-0 m-0 text-xl text-black cursor-pointer hover:text-primaryHover" />
+            <SearchIcon
+              size={40}
+              className="p-0 m-0 text-xl text-black cursor-pointer hover:text-primaryHover"
+            />
             <input
-              className="w-full ml-2 bg-transparent border-none outline-none"
-              placeholder="Search Jobs..."
+              className="w-full h-full ml-2 bg-transparent border-b-2 outline-none placeholder:text-sm"
+              placeholder="Search Jobs (Frontend, Backend, Java)"
               value={searchTerm}
               aria-label="Search jobs"
               onChange={handleSearchEvents}
+            />
+            <p className="text-4xl font-extralight text-gray-800/80">|</p>
+            <MapPin
+              size={40}
+              className="p-0 ml-2 mr-3 text-xl text-black cursor-pointer hover:text-primaryHover"
+            />
+            <input
+              type="text"
+              className="w-full h-full bg-transparent outline-none placeholder:text-sm border-b-2"
+              placeholder="Search By Location(Bangalore, Washington, Hyderabad)"
+              value={locationSearch}
+              onChange={(e) => setLocationSearch(e.target.value)}
+              aria-label="searchByLocation"
             />
           </div>
           <div className="flex flex-wrap gap-6 mt-4">
